@@ -25,7 +25,8 @@ My quick observations of the behavior of the radial menu in "myfitnesspal"
 * The radial menu buttons are approximately the same size as the main menu button.
 * Each button is a flat solid solor with the actual icon being transparent within the circular button
 * Below each button is a small text label, colored in the same manner as the button.
-* It's difficult to tell when the text label becomes viewable during the animations (might become more apparent when recording the app. ***TODO***)
+* During the display animation, the text labels are already present below the radial menu buttons.
+* During the dismiss animation (not the radial menu button dismiss animations), the labels fade out completely during the backward ease before the buttons snap into the main menu button.
 * When a radial menu icon is tapped, that individual icon and it's text label are scaled up in size and transparency is increased for a fraction of a second before the button disappears completely.
 * When a radial menu icon is tapped, every other icon and it's text label are scaled down in size until they disappear completely.
 * The previous 2 effects aren't always very apparent in the actual app because other windows and views instantly appear and cover up the radial menu, but it can be seen with good consitency when selecting the "Excersise" radial menu button.
