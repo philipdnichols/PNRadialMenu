@@ -21,6 +21,7 @@
 		B19C50D519ABC95E003B2C11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B19C50B719ABC95E003B2C11 /* UIKit.framework */; };
 		B19C50DD19ABC95E003B2C11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B19C50DB19ABC95E003B2C11 /* InfoPlist.strings */; };
 		B19C50DF19ABC95E003B2C11 /* PNRadialMenuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C50DE19ABC95E003B2C11 /* PNRadialMenuTests.m */; };
+		B1C4910E19ABCA39008560EE /* PNRadialMenuMainButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4910D19ABCA39008560EE /* PNRadialMenuMainButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		B19C50DA19ABC95E003B2C11 /* PNRadialMenuTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PNRadialMenuTests-Info.plist"; sourceTree = "<group>"; };
 		B19C50DC19ABC95E003B2C11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B19C50DE19ABC95E003B2C11 /* PNRadialMenuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PNRadialMenuTests.m; sourceTree = "<group>"; };
+		B1C4910C19ABCA39008560EE /* PNRadialMenuMainButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNRadialMenuMainButton.h; sourceTree = "<group>"; };
+		B1C4910D19ABCA39008560EE /* PNRadialMenuMainButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNRadialMenuMainButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,9 +117,8 @@
 			children = (
 				B19C50C219ABC95E003B2C11 /* PNAppDelegate.h */,
 				B19C50C319ABC95E003B2C11 /* PNAppDelegate.m */,
-				B19C50C519ABC95E003B2C11 /* Main.storyboard */,
-				B19C50C819ABC95E003B2C11 /* PNViewController.h */,
-				B19C50C919ABC95E003B2C11 /* PNViewController.m */,
+				B1C4910A19ABC9E6008560EE /* View */,
+				B1C4910B19ABC9EC008560EE /* Controller */,
 				B19C50CB19ABC95E003B2C11 /* Images.xcassets */,
 				B19C50BA19ABC95E003B2C11 /* Supporting Files */,
 			);
@@ -150,6 +152,25 @@
 				B19C50DB19ABC95E003B2C11 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B1C4910A19ABC9E6008560EE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B19C50C519ABC95E003B2C11 /* Main.storyboard */,
+				B1C4910C19ABCA39008560EE /* PNRadialMenuMainButton.h */,
+				B1C4910D19ABCA39008560EE /* PNRadialMenuMainButton.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		B1C4910B19ABC9EC008560EE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B19C50C819ABC95E003B2C11 /* PNViewController.h */,
+				B19C50C919ABC95E003B2C11 /* PNViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1C4910E19ABCA39008560EE /* PNRadialMenuMainButton.m in Sources */,
 				B19C50C419ABC95E003B2C11 /* PNAppDelegate.m in Sources */,
 				B19C50CA19ABC95E003B2C11 /* PNViewController.m in Sources */,
 				B19C50C019ABC95E003B2C11 /* main.m in Sources */,
@@ -457,6 +479,7 @@
 				B19C50E419ABC95E003B2C11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B19C50E519ABC95E003B2C11 /* Build configuration list for PBXNativeTarget "PNRadialMenuTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +488,7 @@
 				B19C50E719ABC95E003B2C11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
