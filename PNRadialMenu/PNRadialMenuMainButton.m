@@ -39,13 +39,17 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    UIBezierPath *mainButtonPath = [UIBezierPath bezierPathWithOvalInRect:self.bounds];
-    mainButtonPath.lineWidth = 3;
+    UIBezierPath *mainButtonOutlinePath = [UIBezierPath bezierPathWithOvalInRect:self.bounds];
+    [[UIColor whiteColor] setFill];
+    [mainButtonOutlinePath fill];
     
+    CGFloat outlineWidth = 3;
+    UIBezierPath *mainButtonPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(self.bounds.origin.x + (outlineWidth / 2),
+                                                                                     self.bounds.origin.y + (outlineWidth / 2),
+                                                                                     self.bounds.size.width - outlineWidth,
+                                                                                     self.bounds.size.height - outlineWidth)];
     [[UIColor colorWithRed:0.122 green:0.404 blue:0.765 alpha:1.000] setFill];
-    [[UIColor whiteColor] setStroke];
     [mainButtonPath fill];
-    [mainButtonPath stroke];
     
     CGFloat radiusX = self.bounds.size.width / 2;
     CGFloat radiusY = self.bounds.size.height / 2;
@@ -53,8 +57,9 @@
     CGPoint verticalStartPoint = CGPointMake(self.bounds.origin.x + radiusX, self.bounds.origin.y + (radiusY / 2));
     CGPoint verticalEndPoint = CGPointMake(self.bounds.origin.x + radiusX, self.bounds.origin.y + 3 * (radiusY / 2));
     
+    CGFloat lineWidth = 4;
     UIBezierPath *verticalLinePath = [[UIBezierPath alloc] init];
-    verticalLinePath.lineWidth = 4;
+    verticalLinePath.lineWidth = lineWidth;
     verticalLinePath.lineCapStyle = kCGLineCapRound;
     [verticalLinePath moveToPoint:verticalStartPoint];
     [verticalLinePath addLineToPoint:verticalEndPoint];
@@ -66,7 +71,7 @@
     CGPoint horizontalEndPoint = CGPointMake(self.bounds.origin.x + 3 * (radiusX / 2), self.bounds.origin.y + radiusY);
     
     UIBezierPath *horizontalLinePath = [[UIBezierPath alloc] init];
-    horizontalLinePath.lineWidth = 4;
+    horizontalLinePath.lineWidth = lineWidth;
     horizontalLinePath.lineCapStyle = kCGLineCapRound;
     [horizontalLinePath moveToPoint:horizontalStartPoint];
     [horizontalLinePath addLineToPoint:horizontalEndPoint];
