@@ -20,7 +20,7 @@ My quick observations of the behavior of the radial menu in "myfitnesspal"
 ###Radial Menu
 * When the radial menu is triggered for displaying, the radial menu buttons instantly fly outward to appear in an arc around the main menu button. The buttons appear from behind the main menu button when they first appear. The buttons reach a peak distance away from the main menu button and bounce/snap back into their final spots a few points closer to the main menu button than their maximum distance.
 * When the radial menu is triggered for dimissing, the radial menu buttons, just for a split second, ease backward a few points (same distance as the maximum distance from the previous bulletpoint) from the main menu button before instantly snapping in toward the main menu button, becoming completely hidden.
-* 
+
 ###Radial Menu Buttons
 * The radial menu buttons are approximately the same size as the main menu button.
 * Each button is a flat solid solor with the actual icon being transparent within the circular button
