@@ -22,6 +22,7 @@
 		B19C50DD19ABC95E003B2C11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B19C50DB19ABC95E003B2C11 /* InfoPlist.strings */; };
 		B19C50DF19ABC95E003B2C11 /* PNRadialMenuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C50DE19ABC95E003B2C11 /* PNRadialMenuTests.m */; };
 		B1C4910E19ABCA39008560EE /* PNRadialMenuMainButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4910D19ABCA39008560EE /* PNRadialMenuMainButton.m */; };
+		B1C4911119ABE882008560EE /* PNRadialMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4911019ABE882008560EE /* PNRadialMenuButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		B19C50DE19ABC95E003B2C11 /* PNRadialMenuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PNRadialMenuTests.m; sourceTree = "<group>"; };
 		B1C4910C19ABCA39008560EE /* PNRadialMenuMainButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNRadialMenuMainButton.h; sourceTree = "<group>"; };
 		B1C4910D19ABCA39008560EE /* PNRadialMenuMainButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNRadialMenuMainButton.m; sourceTree = "<group>"; };
+		B1C4910F19ABE882008560EE /* PNRadialMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNRadialMenuButton.h; sourceTree = "<group>"; };
+		B1C4911019ABE882008560EE /* PNRadialMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNRadialMenuButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +163,8 @@
 				B19C50C519ABC95E003B2C11 /* Main.storyboard */,
 				B1C4910C19ABCA39008560EE /* PNRadialMenuMainButton.h */,
 				B1C4910D19ABCA39008560EE /* PNRadialMenuMainButton.m */,
+				B1C4910F19ABE882008560EE /* PNRadialMenuButton.h */,
+				B1C4911019ABE882008560EE /* PNRadialMenuButton.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -275,6 +280,7 @@
 				B19C50C419ABC95E003B2C11 /* PNAppDelegate.m in Sources */,
 				B19C50CA19ABC95E003B2C11 /* PNViewController.m in Sources */,
 				B19C50C019ABC95E003B2C11 /* main.m in Sources */,
+				B1C4911119ABE882008560EE /* PNRadialMenuButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

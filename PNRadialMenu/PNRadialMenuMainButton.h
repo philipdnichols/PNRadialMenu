@@ -10,6 +10,4 @@
 
 @interface PNRadialMenuMainButton : UIView
 
-@property (nonatomic) BOOL isMenuDisplayed;
-
 @end
