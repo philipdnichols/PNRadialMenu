@@ -52,7 +52,7 @@
 
 - (CGFloat)radius
 {
-    return 110.0;
+    return 100.0;
 }
 
 #pragma mark - Lifecycle
@@ -132,28 +132,34 @@
         if (self.menuIsDisplayed) {
             self.isAnimating = YES;
             
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options:kNilOptions
-                             animations:^{
-                                 self.modalView.backgroundColor = [UIColor clearColor];
-                                 
-                                 self.mainButton.transform = CGAffineTransformIdentity;
-                                 
-                                 [self.menuButtons enumerateObjectsUsingBlock:^(PNRadialMenuButton *menuButton, NSUInteger idx, BOOL *stop) {
-                                     menuButton.transform = CGAffineTransformIdentity;
-                                 }];
-                             }
-                             completion:^(BOOL finished) {
-                                 self.isAnimating = NO;
-                                 self.menuIsDisplayed = NO;
-                                 
-                                 self.modalView.hidden = YES;
-                                 
-                                 [self.menuButtons enumerateObjectsUsingBlock:^(PNRadialMenuButton *menuButton, NSUInteger idx, BOOL *stop) {
-                                     menuButton.hidden = YES;
-                                 }];
-                             }];
+            CABasicAnimation *backgroundColorAnimation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+            backgroundColorAnimation.duration = 0.5;
+            backgroundColorAnimation.fromValue = [UIColor colorWithWhite:0.0 alpha:0.75];
+            backgroundColorAnimation.toValue = [UIColor clearColor];
+            
+            [self.modalView.layer addAnimation:backgroundColorAnimation forKey:@"modalViewBackgroundColor"];
+            self.modalView.layer.backgroundColor = [[UIColor clearColor] CGColor];
+            
+            CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+            rotateAnimation.duration = 0.5;
+            rotateAnimation.toValue = @(DEGREES_TO_RADIANS(0));
+            rotateAnimation.removedOnCompletion = NO;
+            rotateAnimation.fillMode = kCAFillModeForwards;
+            rotateAnimation.delegate = self;
+            
+            [self.mainButton.layer addAnimation:rotateAnimation forKey:@"rotate45"];
+            
+            CABasicAnimation *position = [CABasicAnimation animationWithKeyPath:@"position"];
+            position.duration = 0.5;
+            position.toValue = [NSValue valueWithCGPoint:self.mainButton.layer.position];
+            position.timingFunction = [CAMediaTimingFunction functionWithControlPoints:1.0 :-0.07 :0.86 :-0.24];
+            [self.menuButtons enumerateObjectsUsingBlock:^(PNRadialMenuButton *menuButton, NSUInteger idx, BOOL *stop) {
+                position.fromValue = [NSValue valueWithCGPoint:menuButton.layer.position];
+                
+                [menuButton.layer addAnimation:position forKey:[NSString stringWithFormat:@"menuButtonPositioning-%d", idx]];
+                
+                menuButton.layer.position = self.mainButton.layer.position;
+            }];
         } else {
             self.isAnimating = YES;
             self.modalView.hidden = NO;
@@ -161,60 +167,67 @@
                 menuButton.hidden = NO;
             }];
             
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options:kNilOptions
-                             animations:^{
-                                 self.modalView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.75];
-                                 
-                                 CGFloat startAngle = 15;
-                                 CGFloat angle = (self.arcSize >= 360) ? (360 / [self.menuButtons count]) : (([self.menuButtons count] > 1) ? (self.arcSize / ([self.menuButtons count] - 1)) : 0.0);
-                                 [self.menuButtons enumerateObjectsUsingBlock:^(PNRadialMenuButton *menuButton, NSUInteger idx, BOOL *stop) {
-                                     CGFloat radians = DEGREES_TO_RADIANS(startAngle + (angle * idx));
-                                     
-                                     CGFloat x = self.radius * cos(radians);
-                                     CGFloat y = -self.radius * sin(radians);
-                                     menuButton.transform = CGAffineTransformMakeTranslation(x, y);
-                                 }];
-                                 
-                                 self.mainButton.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(-45));
-                             }
-                             completion:^(BOOL finished) {
-                                 self.isAnimating = NO;
-                                 self.menuIsDisplayed = YES;
-                             }];
+            CABasicAnimation *backgroundColorAnimation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+            backgroundColorAnimation.duration = 0.5;
+            backgroundColorAnimation.fromValue = [UIColor clearColor];
+            backgroundColorAnimation.toValue = [UIColor colorWithWhite:0.0 alpha:0.75];
+            
+            [self.modalView.layer addAnimation:backgroundColorAnimation forKey:@"modalViewBackgroundColor"];
+            self.modalView.layer.backgroundColor = [[UIColor colorWithWhite:0.0 alpha:0.75] CGColor];
+            
+            CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+            rotateAnimation.duration = 0.5;
+            rotateAnimation.toValue = @(DEGREES_TO_RADIANS(-45));
+            rotateAnimation.removedOnCompletion = NO;
+            rotateAnimation.fillMode = kCAFillModeForwards;
+            rotateAnimation.delegate = self;
+            
+            [self.mainButton.layer addAnimation:rotateAnimation forKey:@"rotate-45"];
+            
+            CGFloat startAngle = 15;
+            CGFloat angle = (self.arcSize >= 360) ? (360 / [self.menuButtons count]) : (([self.menuButtons count] > 1) ? (self.arcSize / ([self.menuButtons count] - 1)) : 0.0);
+
+            CABasicAnimation *position = [CABasicAnimation animationWithKeyPath:@"position"];
+            position.duration = 0.5;
+            position.fromValue = [NSValue valueWithCGPoint:self.mainButton.layer.position];
+            position.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0.82 :1.69 :0.11 :0.61];
+            [self.menuButtons enumerateObjectsUsingBlock:^(PNRadialMenuButton *menuButton, NSUInteger idx, BOOL *stop) {
+                CGFloat radians = DEGREES_TO_RADIANS(startAngle + (angle * idx));
+                CGFloat x = self.radius * cos(radians);
+                CGFloat y = -self.radius * sin(radians);
+                
+                CGAffineTransform transform = CGAffineTransformMakeTranslation(x, y);
+                CGPoint point = CGPointApplyAffineTransform(menuButton.layer.position, transform);
+
+                position.toValue = [NSValue valueWithCGPoint:point];
+                
+                [menuButton.layer addAnimation:position forKey:[NSString stringWithFormat:@"menuButtonPositioning-%d", idx]];
+                menuButton.layer.position = point;
+            }];
         }
-    
     }
+}
+
+- (void)animationDidStart:(CAAnimation *)anim
+{
     
-//    [UIView animateWithDuration:0.5
-//                          delay:0.0
-//         usingSpringWithDamping:0.5
-//          initialSpringVelocity:0.0
-//                        options:kNilOptions
-//                     animations:^{
-//                         if (!self.mainButton.isMenuDisplayed) {
-//                             self.menuButton.hidden = NO;
-//                             self.menuButton.transform = CGAffineTransformMakeTranslation(0, 100);
-//                         }
-//                     }
-//                     completion:nil];
-//    
-//    [UIView animateWithDuration:0.45
-//                     animations:^{
-//                         if (self.mainButton.isMenuDisplayed) {
-//                             self.menuButton.transform = CGAffineTransformMakeTranslation(0, 110);
-//                         }
-//                     }
-//                     completion:^(BOOL finished) {
-//                         [UIView animateWithDuration:0.05
-//                                               delay:0.0
-//                                             options:kNilOptions
-//                                          animations:^{
-//                                              self.menuButton.transform = CGAffineTransformIdentity;
-//                                          }
-//                                          completion:nil];
-//                     }];
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    // FIXME: This is hacky
+    self.isAnimating = NO;
+    
+    if (self.menuIsDisplayed) {
+        self.menuIsDisplayed = NO;
+        
+        self.modalView.hidden = YES;
+        [self.menuButtons enumerateObjectsUsingBlock:^(PNRadialMenuButton *menuButton, NSUInteger idx, BOOL *stop) {
+            menuButton.hidden = YES;
+        }];
+    } else {
+        self.menuIsDisplayed = YES;
+    }
 }
 
 @end
