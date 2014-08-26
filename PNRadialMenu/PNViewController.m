@@ -174,24 +174,24 @@
 {
     CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
     rotateAnimation.duration = 0.5;
+    rotateAnimation.fromValue = @(DEGREES_TO_RADIANS(0));
     rotateAnimation.toValue = @(DEGREES_TO_RADIANS(-45));
-    rotateAnimation.removedOnCompletion = NO;
-    rotateAnimation.fillMode = kCAFillModeForwards;
     rotateAnimation.delegate = self;
     
     [self.mainButton.layer addAnimation:rotateAnimation forKey:@"rotate-45"];
+    self.mainButton.layer.transform = CATransform3DMakeRotation(DEGREES_TO_RADIANS(-45), 0, 0, 1);
 }
 
 - (void)animateMainButtonClose
 {
     CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
     rotateAnimation.duration = 0.5;
+    rotateAnimation.fromValue = @(DEGREES_TO_RADIANS(-45));
     rotateAnimation.toValue = @(DEGREES_TO_RADIANS(0));
-    rotateAnimation.removedOnCompletion = NO;
-    rotateAnimation.fillMode = kCAFillModeForwards;
     rotateAnimation.delegate = self;
     
     [self.mainButton.layer addAnimation:rotateAnimation forKey:@"rotate45"];
+    self.mainButton.layer.transform = CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 0, 0, 1);
 }
 
 - (void)animateModalDisplay
