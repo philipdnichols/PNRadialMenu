@@ -12,8 +12,12 @@
 
 @property (strong, nonatomic) UIColor *color;
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) NSString *text;
+
+// FIXME: Exposing this for testing purposes
+@property (strong, nonatomic) UILabel *textLabel;
 
 // Designated initializer
-- (instancetype)initWithFrame:(CGRect)frame color:(UIColor *)color image:(UIImage *)image;
+- (instancetype)initWithFrame:(CGRect)frame color:(UIColor *)color image:(UIImage *)image text:(NSString *)text;
 
 @end

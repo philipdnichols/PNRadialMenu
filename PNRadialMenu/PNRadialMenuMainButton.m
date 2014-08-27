@@ -17,6 +17,7 @@
     self.backgroundColor = nil;
     self.opaque = NO;
     self.contentMode = UIViewContentModeRedraw;
+    self.clipsToBounds = NO;
 }
 
 - (void)awakeFromNib
@@ -39,45 +40,78 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    UIBezierPath *mainButtonOutlinePath = [UIBezierPath bezierPathWithOvalInRect:self.bounds];
-    [[UIColor whiteColor] setFill];
-    [mainButtonOutlinePath fill];
+    CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGFloat outlineWidth = 3;
-    UIBezierPath *mainButtonPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(self.bounds.origin.x + (outlineWidth / 2),
-                                                                                     self.bounds.origin.y + (outlineWidth / 2),
-                                                                                     self.bounds.size.width - outlineWidth,
-                                                                                     self.bounds.size.height - outlineWidth)];
-    [[UIColor colorWithRed:0.122 green:0.404 blue:0.765 alpha:1.000] setFill];
-    [mainButtonPath fill];
+    [self drawEllipseInRect:self.bounds
+                  fillColor:[[UIColor colorWithRed:0.122 green:0.404 blue:0.765 alpha:1.000] CGColor]
+                strokeColor:[[UIColor whiteColor] CGColor]
+                strokeWidth:2
+                    context:context];
+    
+    CGFloat lineWidth = 4;
+    CGLineCap lineCap = kCGLineCapRound;
+    CGColorRef lineColor = [[UIColor whiteColor] CGColor];
     
     CGFloat radiusX = self.bounds.size.width / 2;
     CGFloat radiusY = self.bounds.size.height / 2;
     
     CGPoint verticalStartPoint = CGPointMake(self.bounds.origin.x + radiusX, self.bounds.origin.y + (radiusY / 2));
     CGPoint verticalEndPoint = CGPointMake(self.bounds.origin.x + radiusX, self.bounds.origin.y + 3 * (radiusY / 2));
-    
-    CGFloat lineWidth = 4;
-    UIBezierPath *verticalLinePath = [[UIBezierPath alloc] init];
-    verticalLinePath.lineWidth = lineWidth;
-    verticalLinePath.lineCapStyle = kCGLineCapRound;
-    [verticalLinePath moveToPoint:verticalStartPoint];
-    [verticalLinePath addLineToPoint:verticalEndPoint];
-    
-    [[UIColor whiteColor] setStroke];
-    [verticalLinePath stroke];
-    
     CGPoint horizontalStartPoint = CGPointMake(self.bounds.origin.x + (radiusX / 2), self.bounds.origin.y + radiusY);
     CGPoint horizontalEndPoint = CGPointMake(self.bounds.origin.x + 3 * (radiusX / 2), self.bounds.origin.y + radiusY);
     
-    UIBezierPath *horizontalLinePath = [[UIBezierPath alloc] init];
-    horizontalLinePath.lineWidth = lineWidth;
-    horizontalLinePath.lineCapStyle = kCGLineCapRound;
-    [horizontalLinePath moveToPoint:horizontalStartPoint];
-    [horizontalLinePath addLineToPoint:horizontalEndPoint];
+    [self drawLineAtPoint:verticalStartPoint
+                  toPoint:verticalEndPoint
+                lineWidth:lineWidth
+                  lineCap:lineCap
+                    color:lineColor
+                  context:context];
     
-    [[UIColor whiteColor] setStroke];
-    [horizontalLinePath stroke];
+    [self drawLineAtPoint:horizontalStartPoint
+                  toPoint:horizontalEndPoint
+                lineWidth:lineWidth
+                  lineCap:lineCap
+                    color:lineColor
+                  context:context];
+}
+
+// TODO: Create a circular button uiview class that the main menu button and radial menu buttons can inherit from
+- (void)drawEllipseInRect:(CGRect)rect fillColor:(CGColorRef)fillColor strokeColor:(CGColorRef)strokeColor strokeWidth:(CGFloat)strokeWidth context:(CGContextRef)context
+{
+    UIGraphicsPushContext(context);
+    
+    CGContextSetFillColorWithColor(context, fillColor);
+    CGContextSetStrokeColorWithColor(context, strokeColor);
+    CGContextSetLineWidth(context, strokeWidth);
+    
+    CGRect rectToDraw = CGRectInset(rect, strokeWidth / 2, strokeWidth / 2);
+    
+    if (fillColor) {
+        CGContextFillEllipseInRect(context, rectToDraw);
+    } else {
+        CGContextAddEllipseInRect(context, rectToDraw);
+    }
+    
+    if (strokeColor) {
+        CGContextStrokeEllipseInRect(context, rectToDraw);
+    }
+    
+    UIGraphicsPopContext();
+}
+
+- (void)drawLineAtPoint:(CGPoint)startPoint toPoint:(CGPoint)endPoint lineWidth:(CGFloat)lineWidth lineCap:(CGLineCap)lineCap color:(CGColorRef)color context:(CGContextRef)context
+{
+    UIGraphicsPushContext(context);
+    
+    CGContextSetLineWidth(context, lineWidth);
+    CGContextSetLineCap(context, lineCap);
+    CGContextSetStrokeColorWithColor(context, color);
+    
+    CGContextMoveToPoint(context, startPoint.x, startPoint.y);
+    CGContextAddLineToPoint(context, endPoint.x, endPoint.y);
+    CGContextStrokePath(context);
+    
+    UIGraphicsPopContext();
 }
 
 @end

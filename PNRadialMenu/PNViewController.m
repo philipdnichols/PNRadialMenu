@@ -29,7 +29,8 @@
 @property (nonatomic) BOOL menuIsDisplayed;
 
 @property (nonatomic) CGFloat arcSize;
-@property (nonatomic) CGFloat radius;
+@property (nonatomic) CGFloat xRadius;
+@property (nonatomic) CGFloat yRadius;
 
 @end
 
@@ -47,12 +48,17 @@
 
 - (CGFloat)arcSize
 {
-    return 150.0;
+    return 125.0;
 }
 
-- (CGFloat)radius
+- (CGFloat)xRadius
 {
-    return 100.0;
+    return 140.0;
+}
+
+- (CGFloat)yRadius
+{
+    return 130.0;
 }
 
 #pragma mark - Lifecycle
@@ -61,57 +67,63 @@
 {
     [super viewDidLoad];
     
-    self.modalView = [[UIView alloc] initWithFrame:self.view.frame];
+    self.navigationItem.title = @"PNRadialMenu";
+    
+    UIView *view = self.navigationController.view;
+    
+    self.modalView = [[UIView alloc] initWithFrame:view.frame];
+    self.modalView.backgroundColor = [UIColor blackColor];
     self.modalView.hidden = YES;
     
-    [self.view addSubview:self.modalView];
+    [view addSubview:self.modalView];
     
     UITapGestureRecognizer *modalViewTapGestureRecogizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modalViewTapped)];
     [self.modalView addGestureRecognizer:modalViewTapGestureRecogizer];
     
-    CGRect buttonRect = CGRectMake(0, 0, 50, 50);
-    CGPoint buttonPosition = CGPointMake(self.view.center.x, self.view.frame.size.height - buttonRect.size.height / 2 - 5);
+    CGRect mainButtonRect = CGRectMake(0, 0, 50, 50);
+    CGRect menuButtonRect = CGRectMake(0, 0, 47.5, 47.5);
+    CGPoint buttonPosition = CGPointMake(view.center.x, view.frame.size.height - mainButtonRect.size.height / 2 - 5);
     
     // Menu Buttons
-    PNRadialMenuButton *menuButton1 = [[PNRadialMenuButton alloc] initWithFrame:buttonRect color:TealColor image:[UIImage imageNamed:@"clipboard"]];
+    PNRadialMenuButton *menuButton1 = [[PNRadialMenuButton alloc] initWithFrame:menuButtonRect color:TealColor image:[UIImage imageNamed:@"help"] text:@"Help"];
     menuButton1.center = buttonPosition;
     menuButton1.hidden = YES;
     [menuButton1 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuButtonTapped:)]];
-    [self.view addSubview:menuButton1];
+    [view addSubview:menuButton1];
     [self.menuButtons addObject:menuButton1];
     
-    PNRadialMenuButton *menuButton2 = [[PNRadialMenuButton alloc] initWithFrame:buttonRect color:PeriwinkleColor image:[UIImage imageNamed:@"clipboard"]];
+    PNRadialMenuButton *menuButton2 = [[PNRadialMenuButton alloc] initWithFrame:menuButtonRect color:PeriwinkleColor image:[UIImage imageNamed:@"alarmClock"] text:@"Alarms"];
     menuButton2.center = buttonPosition;
     menuButton2.hidden = YES;
     [menuButton2 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuButtonTapped:)]];
-    [self.view addSubview:menuButton2];
+    [view addSubview:menuButton2];
     [self.menuButtons addObject:menuButton2];
     
-    PNRadialMenuButton *menuButton3 = [[PNRadialMenuButton alloc] initWithFrame:buttonRect color:OrangyColor image:[UIImage imageNamed:@"clipboard"]];
+    PNRadialMenuButton *menuButton3 = [[PNRadialMenuButton alloc] initWithFrame:menuButtonRect color:OrangyColor image:[UIImage imageNamed:@"calendar"] text:@"Calendar"];
     menuButton3.center = buttonPosition;
     menuButton3.hidden = YES;
     [menuButton3 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuButtonTapped:)]];
-    [self.view addSubview:menuButton3];
+    [view addSubview:menuButton3];
     [self.menuButtons addObject:menuButton3];
     
-    PNRadialMenuButton *menuButton4 = [[PNRadialMenuButton alloc] initWithFrame:buttonRect color:YellowyColor image:[UIImage imageNamed:@"clipboard"]];
+    PNRadialMenuButton *menuButton4 = [[PNRadialMenuButton alloc] initWithFrame:menuButtonRect color:YellowyColor image:[UIImage imageNamed:@"worldwideLocation"] text:@"Location"];
     menuButton4.center = buttonPosition;
     menuButton4.hidden = YES;
     [menuButton4 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuButtonTapped:)]];
-    [self.view addSubview:menuButton4];
+    [view addSubview:menuButton4];
     [self.menuButtons addObject:menuButton4];
     
-    PNRadialMenuButton *menuButton5 = [[PNRadialMenuButton alloc] initWithFrame:buttonRect color:LavenderColor image:[UIImage imageNamed:@"clipboard"]];
+    PNRadialMenuButton *menuButton5 = [[PNRadialMenuButton alloc] initWithFrame:menuButtonRect color:LavenderColor image:[UIImage imageNamed:@"clipboard"] text:@"Tasks"];
     menuButton5.center = buttonPosition;
     menuButton5.hidden = YES;
     [menuButton5 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuButtonTapped:)]];
-    [self.view addSubview:menuButton5];
+    [view addSubview:menuButton5];
     [self.menuButtons addObject:menuButton5];
     
-    self.mainButton = [[PNRadialMenuMainButton alloc] initWithFrame:buttonRect];
+    self.mainButton = [[PNRadialMenuMainButton alloc] initWithFrame:mainButtonRect];
     self.mainButton.center = buttonPosition;
     
-    [self.view addSubview:self.mainButton];
+    [view addSubview:self.mainButton];
     
     UITapGestureRecognizer *mainButtonTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mainButtonTapped)];
     [self.mainButton addGestureRecognizer:mainButtonTapGestureRecognizer];
@@ -176,6 +188,7 @@
     rotateAnimation.duration = 0.5;
     rotateAnimation.fromValue = @(DEGREES_TO_RADIANS(0));
     rotateAnimation.toValue = @(DEGREES_TO_RADIANS(-45));
+    rotateAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     rotateAnimation.delegate = self;
     
     [self.mainButton.layer addAnimation:rotateAnimation forKey:@"rotate-45"];
@@ -188,47 +201,80 @@
     rotateAnimation.duration = 0.5;
     rotateAnimation.fromValue = @(DEGREES_TO_RADIANS(-45));
     rotateAnimation.toValue = @(DEGREES_TO_RADIANS(0));
+    rotateAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     rotateAnimation.delegate = self;
     
     [self.mainButton.layer addAnimation:rotateAnimation forKey:@"rotate45"];
     self.mainButton.layer.transform = CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 0, 0, 1);
 }
 
+//- (void)animateModalDisplay
+//{
+//    CABasicAnimation *backgroundColorAnimation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+//    backgroundColorAnimation.duration = 0.5;
+//    backgroundColorAnimation.fromValue = [UIColor clearColor];
+//    backgroundColorAnimation.toValue = [UIColor colorWithWhite:0.0 alpha:0.75];
+//    backgroundColorAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    
+//    [self.modalView.layer addAnimation:backgroundColorAnimation forKey:@"modalViewBackgroundColor"];
+//    self.modalView.layer.backgroundColor = [[UIColor colorWithWhite:0.0 alpha:0.75] CGColor];
+//}
+
 - (void)animateModalDisplay
 {
-    CABasicAnimation *backgroundColorAnimation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-    backgroundColorAnimation.duration = 0.5;
-    backgroundColorAnimation.fromValue = [UIColor clearColor];
-    backgroundColorAnimation.toValue = [UIColor colorWithWhite:0.0 alpha:0.75];
+    CABasicAnimation *opactiyAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    opactiyAnimation.duration = 0.5;
+    opactiyAnimation.fromValue = @0.0;
+    opactiyAnimation.toValue = @0.75;
+    opactiyAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     
-    [self.modalView.layer addAnimation:backgroundColorAnimation forKey:@"modalViewBackgroundColor"];
-    self.modalView.layer.backgroundColor = [[UIColor colorWithWhite:0.0 alpha:0.75] CGColor];
+    [self.modalView.layer addAnimation:opactiyAnimation forKey:@"transparentToOpaque"];
+    self.modalView.layer.opacity = 0.75;
 }
+
+//- (void)animateModalDismiss
+//{
+//    CABasicAnimation *backgroundColorAnimation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+//    backgroundColorAnimation.duration = 0.5;
+//    backgroundColorAnimation.fromValue = [UIColor colorWithWhite:0.0 alpha:0.75];
+//    backgroundColorAnimation.toValue = [UIColor clearColor];
+//    backgroundColorAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    
+//    [self.modalView.layer addAnimation:backgroundColorAnimation forKey:@"modalViewBackgroundColor"];
+//    self.modalView.layer.backgroundColor = [[UIColor clearColor] CGColor];
+//}
 
 - (void)animateModalDismiss
 {
-    CABasicAnimation *backgroundColorAnimation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-    backgroundColorAnimation.duration = 0.5;
-    backgroundColorAnimation.fromValue = [UIColor colorWithWhite:0.0 alpha:0.75];
-    backgroundColorAnimation.toValue = [UIColor clearColor];
+    CABasicAnimation *opactiyAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    opactiyAnimation.duration = 0.5;
+    opactiyAnimation.fromValue = @0.75;
+    opactiyAnimation.toValue = @0.0;
+    opactiyAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     
-    [self.modalView.layer addAnimation:backgroundColorAnimation forKey:@"modalViewBackgroundColor"];
-    self.modalView.layer.backgroundColor = [[UIColor clearColor] CGColor];
+    [self.modalView.layer addAnimation:opactiyAnimation forKey:@"opaqueToTransparent"];
+    self.modalView.layer.opacity = 0.0;
 }
 
 - (void)animateMenuButtonsDisplay
 {
-    CGFloat startAngle = 15;
+    CGFloat startAngle = 27.5;
     CGFloat angle = (self.arcSize >= 360) ? (360 / [self.menuButtons count]) : (([self.menuButtons count] > 1) ? (self.arcSize / ([self.menuButtons count] - 1)) : 0.0);
     
     CABasicAnimation *position = [CABasicAnimation animationWithKeyPath:@"position"];
     position.duration = 0.5;
     position.fromValue = [NSValue valueWithCGPoint:self.mainButton.layer.position];
     position.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0.82 :1.69 :0.11 :0.61];
+    
+    CABasicAnimation *opacity = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    opacity.duration = 0.2;
+    opacity.fromValue = @0.0;
+    opacity.toValue = @1.0;
+    
     [self.menuButtons enumerateObjectsUsingBlock:^(PNRadialMenuButton *menuButton, NSUInteger idx, BOOL *stop) {
         CGFloat radians = DEGREES_TO_RADIANS(startAngle + (angle * idx));
-        CGFloat x = self.radius * cos(radians);
-        CGFloat y = -self.radius * sin(radians);
+        CGFloat x = self.xRadius * cos(radians);
+        CGFloat y = -self.yRadius * sin(radians);
         
         CGAffineTransform transform = CGAffineTransformMakeTranslation(x, y);
         CGPoint point = CGPointApplyAffineTransform(menuButton.layer.position, transform);
@@ -236,7 +282,10 @@
         position.toValue = [NSValue valueWithCGPoint:point];
         
         [menuButton.layer addAnimation:position forKey:[NSString stringWithFormat:@"menuButtonPositioning-%d", idx]];
+        [menuButton.textLabel.layer addAnimation:opacity forKey:@"translucentToOpaque"];
+        
         menuButton.layer.position = point;
+        menuButton.textLabel.layer.opacity = 1.0;
     }];
 }
 
@@ -246,12 +295,20 @@
     position.duration = 0.5;
     position.toValue = [NSValue valueWithCGPoint:self.mainButton.layer.position];
     position.timingFunction = [CAMediaTimingFunction functionWithControlPoints:1.0 :-0.07 :0.86 :-0.24];
+    
+    CABasicAnimation *opacity = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    opacity.duration = 0.2;
+    opacity.fromValue = @1.0;
+    opacity.toValue = @0.0;
+    
     [self.menuButtons enumerateObjectsUsingBlock:^(PNRadialMenuButton *menuButton, NSUInteger idx, BOOL *stop) {
         position.fromValue = [NSValue valueWithCGPoint:menuButton.layer.position];
         
         [menuButton.layer addAnimation:position forKey:[NSString stringWithFormat:@"menuButtonPositioning-%d", idx]];
+        [menuButton.textLabel.layer addAnimation:opacity forKey:@"opaqueToTranslucent"];
         
         menuButton.layer.position = self.mainButton.layer.position;
+        menuButton.textLabel.layer.opacity = 0.0;
     }];
 }
 
