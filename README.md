@@ -2,6 +2,10 @@
 
 Trying my hand at creating a reusable radial menu in the style of the "myfitnesspal" radial menu button.
 
+#TODO
+
+* Credit icons8 for test icons.
+
 #Observations
 
 My quick observations of the behavior of the radial menu in "myfitnesspal"
