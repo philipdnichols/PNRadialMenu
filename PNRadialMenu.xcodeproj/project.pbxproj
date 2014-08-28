@@ -22,6 +22,7 @@
 		B19C50DD19ABC95E003B2C11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B19C50DB19ABC95E003B2C11 /* InfoPlist.strings */; };
 		B19C50DF19ABC95E003B2C11 /* PNRadialMenuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C50DE19ABC95E003B2C11 /* PNRadialMenuTests.m */; };
 		B1BE3C1019AE6B05009A3776 /* PNRadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BE3C0F19AE6B05009A3776 /* PNRadialMenu.m */; };
+		B1BE3C1619AE6EAD009A3776 /* UIView+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BE3C1519AE6EAD009A3776 /* UIView+Drawing.m */; };
 		B1C4910E19ABCA39008560EE /* PNRadialMenuMainButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4910D19ABCA39008560EE /* PNRadialMenuMainButton.m */; };
 		B1C4911119ABE882008560EE /* PNRadialMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4911019ABE882008560EE /* PNRadialMenuButton.m */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,8 @@
 		B19C50DE19ABC95E003B2C11 /* PNRadialMenuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PNRadialMenuTests.m; sourceTree = "<group>"; };
 		B1BE3C0E19AE6B05009A3776 /* PNRadialMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNRadialMenu.h; sourceTree = "<group>"; };
 		B1BE3C0F19AE6B05009A3776 /* PNRadialMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNRadialMenu.m; sourceTree = "<group>"; };
+		B1BE3C1419AE6EAD009A3776 /* UIView+Drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Drawing.h"; sourceTree = "<group>"; };
+		B1BE3C1519AE6EAD009A3776 /* UIView+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Drawing.m"; sourceTree = "<group>"; };
 		B1C4910C19ABCA39008560EE /* PNRadialMenuMainButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNRadialMenuMainButton.h; sourceTree = "<group>"; };
 		B1C4910D19ABCA39008560EE /* PNRadialMenuMainButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNRadialMenuMainButton.m; sourceTree = "<group>"; };
 		B1C4910F19ABE882008560EE /* PNRadialMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNRadialMenuButton.h; sourceTree = "<group>"; };
@@ -170,6 +173,8 @@
 				B1C4910D19ABCA39008560EE /* PNRadialMenuMainButton.m */,
 				B1C4910F19ABE882008560EE /* PNRadialMenuButton.h */,
 				B1C4911019ABE882008560EE /* PNRadialMenuButton.m */,
+				B1BE3C1419AE6EAD009A3776 /* UIView+Drawing.h */,
+				B1BE3C1519AE6EAD009A3776 /* UIView+Drawing.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 			files = (
 				B1C4910E19ABCA39008560EE /* PNRadialMenuMainButton.m in Sources */,
 				B19C50C419ABC95E003B2C11 /* PNAppDelegate.m in Sources */,
+				B1BE3C1619AE6EAD009A3776 /* UIView+Drawing.m in Sources */,
 				B19C50CA19ABC95E003B2C11 /* PNViewController.m in Sources */,
 				B1BE3C1019AE6B05009A3776 /* PNRadialMenu.m in Sources */,
 				B19C50C019ABC95E003B2C11 /* main.m in Sources */,

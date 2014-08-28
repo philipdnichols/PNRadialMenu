@@ -7,6 +7,7 @@
 //
 
 #import "PNRadialMenuButton.h"
+#import "UIView+Drawing.h"
 
 @implementation PNRadialMenuButton
 
@@ -69,29 +70,6 @@
     
     CGRect imageRect = CGRectInset(self.bounds, 8, 8);
     [self.image drawInRect:imageRect blendMode:kCGBlendModeXOR alpha:1.0];
-}
-
-- (void)drawEllipseInRect:(CGRect)rect fillColor:(CGColorRef)fillColor strokeColor:(CGColorRef)strokeColor strokeWidth:(CGFloat)strokeWidth context:(CGContextRef)context
-{
-    UIGraphicsPushContext(context);
-    
-    CGContextSetFillColorWithColor(context, fillColor);
-    CGContextSetStrokeColorWithColor(context, strokeColor);
-    CGContextSetLineWidth(context, strokeWidth);
-    
-    CGRect rectToDraw = CGRectInset(rect, strokeWidth / 2, strokeWidth / 2);
-    
-    if (fillColor) {
-        CGContextFillEllipseInRect(context, rectToDraw);
-    } else {
-        CGContextAddEllipseInRect(context, rectToDraw);
-    }
-    
-    if (strokeColor) {
-        CGContextStrokeEllipseInRect(context, rectToDraw);
-    }
-    
-    UIGraphicsPopContext();
 }
 
 @end
